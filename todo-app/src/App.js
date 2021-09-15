@@ -1,11 +1,12 @@
-import './App.css';
+import PinBoard from "./components/PinBoard";
+import "./App.css";
 
 const App = () => {
   return (
     <div className="App">
-      <h1>ToDO</h1>
+      <PinBoard />
     </div>
   );
-}
+};
 
 export default App;
