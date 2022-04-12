@@ -6,9 +6,8 @@ import {
   Typography,
   Button,
   ButtonGroup,
-  makeStyles,
-} from "@material-ui/core";
-import { Save, Delete, Edit, Cancel } from "@material-ui/icons";
+} from "@mui/material";
+import { Save, Delete, Edit, Cancel } from "@mui/icons-material";
 import { useState } from "react";
 
 const ToDo = ({ id, todos, setTodos }) => {
@@ -20,7 +19,7 @@ const ToDo = ({ id, todos, setTodos }) => {
 
   const [prev, setPrev] = useState({ title: title, task: task });
 
-  const useStyle = makeStyles({
+  const ui = {
     card: {
       display: "flex",
       flexDirection: "column",
@@ -29,28 +28,27 @@ const ToDo = ({ id, todos, setTodos }) => {
       height: "40vh",
       margin: "1vw",
     },
-    cardAction: {
+    cardActions: {
       display: "flex",
       alignSelf: "flex-end",
     },
-  });
-
-  const ui = useStyle();
+  };
 
   const deleteSelf = (e) => {
-    var arr = [...todos];
+    let arr = [...todos];
     arr.splice(arr.indexOf(id), 1);
     setTodos(arr);
   };
 
   if (edit) {
     return (
-      <Card variant="outlined" className={ui.card}>
+      <Card variant="outlined" key={id.split("_")[0]} style={ui.card}>
         <CardContent>
           <TextField
+            key={id.split("_")[1]}
             variant="standard"
             placeholder="Title"
-            value={title ? title : null}
+            value={title ? title : ""}
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -58,16 +56,17 @@ const ToDo = ({ id, todos, setTodos }) => {
         </CardContent>
         <CardContent>
           <TextField
+            key={id.split("_")[2]}
             variant="filled"
             placeholder="Task"
-            value={task ? task : null}
+            value={task ? task : ""}
             onChange={(e) => {
               setTask(e.target.value);
             }}
           />
         </CardContent>
-        <Typography variant="caption">{id}</Typography>
-        <CardActions className={ui.cardAction}>
+        <Typography variant="caption">{id.split("_")[0]}</Typography>
+        <CardActions style={ui.cardActions}>
           <ButtonGroup variant="text">
             <Button
               onClick={(e) => {
@@ -91,15 +90,15 @@ const ToDo = ({ id, todos, setTodos }) => {
     );
   } else {
     return (
-      <Card variant="outlined" className={ui.card}>
+      <Card variant="outlined" key={id.split("_")[0]} style={ui.card}>
         <CardContent>
           <Typography variant="h4">{title ? title : "Title"}</Typography>
         </CardContent>
         <CardContent>
           <Typography variant="h6">{task ? task : "Task"}</Typography>
         </CardContent>
-        <Typography variant="caption">{id}</Typography>
-        <CardActions className={ui.cardAction}>
+        <Typography variant="caption">{id.split("_")[0]}</Typography>
+        <CardActions style={ui.cardActions}>
           <ButtonGroup variant="text">
             <Button
               onClick={(e) => {

@@ -1,40 +1,41 @@
 import { useState } from "react";
-import { IconButton, makeStyles } from "@material-ui/core";
-import { AddCircle } from "@material-ui/icons";
+import { IconButton } from "@mui/material";
+import { AddCircle } from "@mui/icons-material";
 import ToDo from "./ToDo";
 
 const PinBoard = () => {
-  const useStyle = makeStyles({
+  const ui = {
+    addButton: { position: "absoulte" },
     strip: {
       display: "flex",
       flexDirection: "column",
       position: "relative",
       width: "100%",
     },
-    addButton: {
-      position: "absoulte",
-    },
-  });
+  };
 
-  const ui = useStyle();
   const [todos, setTodos] = useState([]);
 
   const genId = () => {
-    return Math.random().toString(36).substring(2, 15);
+    let card = Math.random().toString(36).substring(2, 15);
+    let title = Math.random().toString(36).substring(2, 15);
+    let text = Math.random().toString(36).substring(2, 15);
+
+    return `${card}_${title}_${text}`;
   };
 
   const createTodo = (e) => {
-    var arr = [...todos];
+    let arr = [...todos];
 
     const divider = 4;
 
-    var divArr = [];
-    var total = Math.ceil(arr.length / divider);
-    for (var i = 0; i < total; i++) {
-      var lower = i * divider;
-      var upper = lower + divider;
-      var temp = [];
-      for (var j = lower; j < upper; j++) {
+    let divArr = [];
+    let total = Math.ceil(arr.length / divider);
+    for (let i = 0; i < total; i++) {
+      let lower = i * divider;
+      let upper = lower + divider;
+      let temp = [];
+      for (let j = lower; j < upper; j++) {
         if (arr[j]) {
           temp.push(arr[j]);
         }
@@ -65,15 +66,15 @@ const PinBoard = () => {
     >
       <h1>ToDo</h1>
       <IconButton
-        className={ui.addButton}
         onClick={(e) => {
           setTodos([...todos, genId()]);
         }}
         color="secondary"
+        style={ui.addButton}
       >
         <AddCircle style={{ fontSize: "60" }} />
       </IconButton>
-      <div className={ui.strip}>{createTodo()}</div>
+      <div style={ui.strip}>{createTodo()}</div>
     </div>
   );
 };
